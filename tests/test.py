@@ -17,4 +17,5 @@ if __name__ == "__main__":
         df['original'].hist(bins = 100, density = 1, legend = "original")
         df['generated'].hist(bins = 100, density = 1, legend = "generated")
 
-        plt.show()
+        plt.savefig(f"example_{i}.png")
+        plt.close()
