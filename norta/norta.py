@@ -69,7 +69,7 @@ class Norta:
         bins = np.zeros((self.cov_m.shape[0], n_bins + 1))
         cdfs = np.zeros((self.cov_m.shape[0], n_bins))
 
-        for i in tqdm(range(self.cov_m.shape[0]), disable=verbosity):
+        for i in tqdm(range(self.cov_m.shape[0]), disable=verbosity, desc = "Computing cfds"):
             densities[i, :], bins[i, :] = np.histogram(
                 self.samples[:, i], bins=n_bins, density=True
             )
@@ -77,7 +77,7 @@ class Norta:
             dist = bins[i, 1] - bins[i, 0]
             cdfs[i, :] = np.cumsum(densities[i, :]) * dist
 
-        for n in tqdm(range(n_samples), disable = verbosity):
+        for n in tqdm(range(n_samples), disable = verbosity, desc = "Generating samples"):
             W = np.random.normal(
                 size=(self.lower_triangular.shape[0], 1), loc=0, scale=1
             )
