@@ -29,8 +29,7 @@ python3 setup.py develop --user
 
 ## Usage
 ```python
-
-from norta.norta import Norta 
+from norta import Norta 
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -39,7 +38,7 @@ import pandas as pd
 if __name__ == "__main__":
     data = np.zeros((10000, 2))
     data[:, 0] = np.random.normal(size = data.shape[0], loc = 0, scale = 17)
-    data[:, 1] = np.random.normal(size = data.shape[0], loc = 6, scale = 1)
+    data[:, 1] = data[:, 0] + np.random.normal(size = data.shape[0], loc = 6, scale = 1)
 
     norta = Norta(data)
     samples = norta.generate_samples(n_samples=10000, n_bins = 150)
@@ -64,6 +63,6 @@ Generating samples: 100%|██████████████████�
 
 and plots:
 
-![example_1](figures/example_0.png)
+![example_1](figures/example_two_normals_figure_0.png)
 
-![example_2](figures/example_1.png)
+![example_2](figures/example_two_normals_figure_1.png)
