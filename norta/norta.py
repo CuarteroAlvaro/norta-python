@@ -33,7 +33,10 @@ class Norta:
 
         self.samples = samples
         self.cov_m = np.cov(samples.T)
-        _, self.lower_triangular, _ = linalg.lu(self.cov_m)
+        lower_triangular = linalg.cholesky(self.cov_m, lower = True)
+        row_sums = lower_triangular.sum(axis=1)
+        self.lower_triangular = lower_triangular  / row_sums[:, np.newaxis]
+
 
     def generate_samples(self, n_samples: int, n_bins: int=None, verbose: int = 1) -> np.array:
         """Main method to generate samples from the given distribution via NORTA method.
@@ -81,9 +84,11 @@ class Norta:
             W = np.random.normal(
                 size=(self.lower_triangular.shape[0], 1), loc=0, scale=1
             )
-            Z = self.lower_triangular @ W
+
+            Z = np.dot(self.lower_triangular, W)
 
             generated_sample = np.zeros((self.lower_triangular.shape[0], 1))
+
             for i in range(Z.shape[0]):
                 generated_sample[i] = self.inverse_cdf(
                     cdfs[i, :], bins[i, :], standard_normal.cdf(Z[i])
