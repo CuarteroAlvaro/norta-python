@@ -2,7 +2,7 @@ import numpy as np
 from scipy import linalg
 from statistics import NormalDist
 from tqdm import tqdm
-
+import pandas as pd
 
 class InvalidData(Exception):
     "Exception raised when data is incompatible with the Norta method"
@@ -32,11 +32,10 @@ class Norta:
             )
 
         self.samples = samples
-        self.cov_m = np.cov(samples.T)
-        lower_triangular = linalg.cholesky(self.cov_m, lower = True)
-        row_sums = lower_triangular.sum(axis=1)
-        self.lower_triangular = lower_triangular  / row_sums[:, np.newaxis]
-
+        df_matrix = pd.DataFrame(self.samples,columns=list(range(self.samples.shape[-1])))
+        self.corr_m = df_matrix.corr().to_numpy()
+        self.lower_triangular = linalg.cholesky(self.corr_m, lower = True)
+        
 
     def generate_samples(self, n_samples: int, n_bins: int=None, verbose: int = 1) -> np.array:
         """Main method to generate samples from the given distribution via NORTA method.
@@ -66,13 +65,13 @@ class Norta:
         if n_bins is None:
             n_bins = self.samples.shape[0] // 20
 
-        generated_samples = np.zeros((n_samples, self.cov_m.shape[0]))
+        generated_samples = np.zeros((n_samples, self.corr_m.shape[0]))
 
-        densities = np.zeros((self.cov_m.shape[0], n_bins))
-        bins = np.zeros((self.cov_m.shape[0], n_bins + 1))
-        cdfs = np.zeros((self.cov_m.shape[0], n_bins))
+        densities = np.zeros((self.corr_m.shape[0], n_bins))
+        bins = np.zeros((self.corr_m.shape[0], n_bins + 1))
+        cdfs = np.zeros((self.corr_m.shape[0], n_bins))
 
-        for i in tqdm(range(self.cov_m.shape[0]), disable=verbosity, desc = "Computing cfds"):
+        for i in tqdm(range(self.corr_m.shape[0]), disable=verbosity, desc = "Computing cfds"):
             densities[i, :], bins[i, :] = np.histogram(
                 self.samples[:, i], bins=n_bins, density=True
             )
@@ -86,6 +85,7 @@ class Norta:
             )
 
             Z = np.dot(self.lower_triangular, W)
+
 
             generated_sample = np.zeros((self.lower_triangular.shape[0], 1))
 
@@ -125,6 +125,6 @@ class Norta:
         out_value = (
             bins[indexes[1]] * distances[indexes[0]]
             + bins[indexes[0]] * distances[indexes[1]]
-        ) / (distances[indexes[0]] + distances[indexes[1]])
+        ) / (distances[indexes[0]] + distances[indexes[1]]) + (bins[1] - bins[0])
 
         return out_value
