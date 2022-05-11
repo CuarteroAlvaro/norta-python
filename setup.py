@@ -12,6 +12,7 @@ setup(
         "numpy",
         "scipy",
         "statistics", 
-        "tqdm"
+        "tqdm",
+        "pandas"
     ],
 )
