@@ -14,7 +14,7 @@ class Norta:
 
     def __init__(self, samples: np.array) -> None:
         """Init method for Norta class. In this method, the input
-        data are validated and the covariance matrices and the
+        data are validated and the correlation matrix and the
         corresponding lower triangular decomposition are computed.
 
         Parameters
