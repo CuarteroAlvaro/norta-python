@@ -8,7 +8,7 @@ Python implementation of Norta procedure (Cario and Nelson, 1997.)
 This module is uploaded to `PyPi` so it can be installed using `pip`:
 
 ```bash
-pip install norta-python
+pip install norta-python==0.1.0
 ```
 
 Also, it can be installed using this repository:
