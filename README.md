@@ -5,27 +5,23 @@ Python implementation of Norta procedure (Cario and Nelson, 1997.)
 
 ## Installation
 
-1. Clone the repository:
+This module is uploaded to `PyPi` so it can be installed using `pip`:
 
+```bash
+pip install norta-python
+```
+
+Also, it can be installed using this repository:
 ```
 git clone https://github.com/CuarteroAlvaro/norta-python.git
 ```
-
-2. Jump into the repository:
 ```
 cd norta-python
 ```
-
-3. Install the package using pip:
-```
-pip install .
-```
-
-or in develop model:
-
 ```
 python3 setup.py develop --user
 ```
+
 
 ## Usage
 ```python
