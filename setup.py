@@ -13,6 +13,7 @@ setup(
         "scipy",
         "statistics", 
         "tqdm",
-        "pandas"
+        "pandas",
+        "matplotlib"
     ],
 )
