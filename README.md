@@ -10,7 +10,7 @@ This module is uploaded to `PyPi` so it can be installed using `pip`:
 ```bash
 pip install norta-python==0.1.0
 ```
-
+soy un pringao
 Also, it can be installed using this repository:
 ```
 git clone https://github.com/CuarteroAlvaro/norta-python.git
