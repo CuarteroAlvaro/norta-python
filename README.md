@@ -19,7 +19,7 @@ git clone https://github.com/CuarteroAlvaro/norta-python.git
 cd norta-python
 ```
 ```
-python3 setup.py develop --user
+python setup.py develop --user
 ```
 
 
