@@ -4,7 +4,7 @@ setup(
     name="norta-python",
     version="0.1.0",
     author="CuarteroAlvaro",
-    url="hhttps://github.com/CuarteroAlvaro/norta-python.git",
+    url="https://github.com/CuarteroAlvaro/norta-python.git",
     packages=find_packages(),
     python_requires=">=3.9",
     setup_requires=["setuptools_scm"],
